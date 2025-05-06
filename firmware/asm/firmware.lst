@@ -1,0 +1,30 @@
+
+firmware.elf:     file format elf32-littleriscv
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 everything    00000032  00000000  00000000  00000054  2**2
+                  CONTENTS, ALLOC, LOAD, CODE
+
+Disassembly of section everything:
+
+00000000 <for>:
+   0:	00000293          	li	t0,0
+   4:	00000313          	li	t1,0
+   8:	00a00393          	li	t2,10
+
+0000000c <loop>:
+   c:	00128293          	addi	t0,t0,1
+  10:	00228313          	addi	t1,t0,2
+  14:	fe53dce3          	bge	t2,t0,c <loop>
+  18:	1941                	.insn	2, 0x1941
+  1a:	0000                	.insn	2, 0x
+  1c:	7200                	.insn	2, 0x7200
+  1e:	7369                	.insn	2, 0x7369
+  20:	01007663          	bgeu	zero,a6,2c <loop+0x20>
+  24:	0000000f          	fence	unknown,unknown
+  28:	7205                	.insn	2, 0x7205
+  2a:	3376                	.insn	2, 0x3376
+  2c:	6932                	.insn	2, 0x6932
+  2e:	7032                	.insn	2, 0x7032
+  30:	0031                	.insn	2, 0x0031

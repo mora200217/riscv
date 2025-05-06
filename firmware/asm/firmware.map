@@ -1,0 +1,24 @@
+
+There are no discarded input sections
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+BRAM             0x00000000         0x00004000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+
+everything      0x00000000       0x32
+                0x00000000                        . = ALIGN (0x4)
+ for.o(.text)
+ .text          0x00000000       0x18 for.o
+                0x00000000                for
+ *(.*)
+ .data          0x00000018        0x0 for.o
+ .bss           0x00000018        0x0 for.o
+ .riscv.attributes
+                0x00000018       0x1a for.o
+LOAD for.o
+OUTPUT(firmware.elf elf32-littleriscv)
