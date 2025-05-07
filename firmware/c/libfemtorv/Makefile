@@ -1,33 +1,21 @@
-OBJECTS =  microwait.o  milliwait.o  wait_cycles.o  femtorv32.o  uart.o cycles_32.o print.o printf.o
-#CROSS   = riscv64-unknown-elf
-CROSS   = riscv32-unknown-elf
-CC      = $(CROSS)-gcc
-AS      = $(CROSS)-as
-LD      = $(CROSS)-ld
-AR      = $(CROSS)-ar
-RANLIB  = $(CROSS)-ranlib
-OBJCOPY = $(CROSS)-objcopy
-OBJDUMP = $(CROSS)-objdump
-AFLAGS  = -march=rv32i -mabi=ilp32
-CFLAGS  = -Iinclude -I. -fno-pic -march=rv32i -mabi=ilp32 -fno-stack-protector -w -Wl,--no-relax
+include ../makefile.inc
 
+FAT_IO_OBJS_WITH_DIR=fat_io_lib/fat_access.o fat_io_lib/fat_cache.o \
+                     fat_io_lib/fat_filelib.o fat_io_lib/fat_format.o fat_io_lib/fat_misc.o \
+                     fat_io_lib/fat_string.o fat_io_lib/fat_table.o fat_io_lib/fat_write.o
 
-all: libfemtorv.a crt0_baremetal.o
+FAT_IO_OBJS=fat_access.o fat_cache.o fat_filelib.o fat_format.o fat_misc.o \
+            fat_string.o fat_table.o fat_write.o
 
-libfemtorv.a: $(OBJECTS) 
-	$(AR) cq $@ $(OBJECTS)
-	$(RANLIB) $@	
-%.o: %.c
-	$(CC) $(CFLAGS) -c $<
-%.o: %.S
-	$(AS) $(AFLAGS) -c $< -o $@
-clean:
-	rm -rf  $(OBJECTS) *.elf *.bin .*~ *~ *.map *.d *.hex *.o libfemtorv.a
-.PHONY: clean
+OBJECTS= femtorv32.o max7219.o ssd1351_1331.o ssd1351_1331_init.o uart.o keyboard.o \
+         virtual_io.o \
+	 wait_cycles.o microwait.o milliwait.o milliseconds.o\
+         spi_sd.o cycles_32.o cycles_64.o \
+	 filesystem.o exec.o femto_elf.o 
 
+all: $(RVGCC) libfemtorv32.a 
 
-#export PATH=$PATH:/home/carlos/Embedded/litex_work/learn-fpga/FemtoRV/FIRMWARE/TOOLCHAIN/riscv64-unknown-elf-gcc-8.3.0-2020.04.0-x86_64-linux-ubuntu14/bin/
-#riscv64-unknown-elf-as -march=rv32imafc -mabi=ilp32f -I. -I/home/carlos/Embedded/litex_work/learn-fpga/FemtoRV/FIRMWARE//LIBFEMTOC  femtorv32.S -o femtorv32.o 
-#riscv64-unknown-elf-ar cq libfemtorv32.a femtorv32.o  uart.o cycles_32.o cycles_64.o femto_elf.o  
-#riscv64-unknown-elf-ranlib libfemtorv32.a
+libfemtorv32.a: $(OBJECTS) $(FAT_IO_OBJS_WITH_DIR) 
+	$(RVAR) cq libfemtorv32.a $(OBJECTS) $(FAT_IO_OBJS)
+	$(RVRANLIB) libfemtorv32.a
 

@@ -4,9 +4,11 @@
 // This version for processors that do not have 64-bits
 // tick counter. 
 
-uint32_t cycles() {
+#ifndef CYCLES_64
+uint64_t cycles() RV32_FASTCODE;
+uint64_t cycles() {
   static uint32_t cycles_lap_=0;
-  static uint32_t cycles_=0;
+  static uint64_t cycles_=0;
   static uint32_t last_cycles32_=0;
   uint32_t cycles32_;
 
@@ -28,8 +30,7 @@ uint32_t cycles() {
   cycles_ += cycles32_;
   cycles_ -= last_cycles32_;
   last_cycles32_ = cycles32_;
-  
-
   return cycles_;
 }
+#endif
 

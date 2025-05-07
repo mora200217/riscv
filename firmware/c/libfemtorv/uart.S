@@ -4,29 +4,23 @@
 # NanoRv UART support
 #################################################################################
 
-.global	putchar
-.type	putchar, @function
-putchar:
-   sw a0, IO_UART_DAT(gp)
-   li   t0, 0x01
-   sw   t0, IO_UART_CNTL(gp)
-   li   t0, 0x00
-   sw   t0, IO_UART_CNTL(gp)
-   li t0, 1<<9
-.L0:  
-   lw t1, IO_UART_CNTL(gp)
-   and t1, t1, t0
-   bnez t1, .L0
-  ret
+.global	UART_putchar
+.type	UART_putchar, @function
+UART_putchar:
+        sw a0,IO_UART_DAT(gp)
+pcrx:	lw t0,IO_UART_DAT(gp)
+	andi t0,t0,512 # bit 9 = busy
+	bnez t0,pcrx
+	ret
 
-.global	getchar
-.type	getchar, @function
-getchar:
+.global	UART_getchar
+.type	UART_getchar, @function
+UART_getchar:
         lw a0,IO_UART_DAT(gp)
 	andi t0,a0,256 # bit 8 = data ready
-        beqz t0,getchar
+        beqz t0,UART_getchar
 	andi a0, a0, 255
 	li t0, 10                  # <enter> generates CR/LF, we ignore LF.
-	beq a0, t0, getchar
+	beq a0, t0, UART_getchar
         ret 
 
