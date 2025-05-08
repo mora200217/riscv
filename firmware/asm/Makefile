@@ -8,8 +8,8 @@
 # a:
 # COMMONFLAGS += -flto
 # *************************************************
-#OBJECTS =  bin_to_bcd.o mult.o div.o wait.o putchar.o getchar.o calculator.o #hello.o 
-OBJECTS =  for.o 
+OBJECTS =  bin_to_bcd.o mult.o div.o wait.o putchar.o getchar.o calculator.o  #hello.o
+# OBJECTS =  for.o
 CROSS   = riscv64-unknown-elf
 CC      = $(CROSS)-gcc
 AS      = $(CROSS)-as
@@ -17,7 +17,6 @@ LD      = $(CROSS)-ld
 OBJCOPY = $(CROSS)-objcopy
 OBJDUMP = $(CROSS)-objdump
 AFLAGS  = -march=rv32i -mabi=ilp32
-
 all: firmware.hex
 
 firmware.bin: firmware.elf

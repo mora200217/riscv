@@ -20,7 +20,6 @@ mult:
   li    a0, 0        # PP = 0
 .L2:
   andi  a3, a5, 1    #
-  t
   beqz  a3, .L1      # LSB of a5 = 0 ?
   add   a0, a0, a4   # PP = PP + a4
 .L1:

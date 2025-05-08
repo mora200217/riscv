@@ -7,10 +7,9 @@ SECTIONS
     everything :
     {
 	. = ALIGN(4);
-/*	calculator.o (.text) */
+	calculator.o (.text)
 
-    for.o (.text)
-        *(.*)
-    } >BRAM
+    /* for.o (.text) */
+         *(.*)
+     } >BRAM
 }
-

@@ -54,16 +54,14 @@ loopM:
 
 	la   a0, result
 	call putstring
-	
-
 
 	mv   a1,t0
 	mv   a0,a2
 		
 	li   t0, '*'
 	bne  t0, a3, divide
-#	call mult
-	call mult_hw
+	call mult
+#	call mult_hw
 	j    print_res
 divide:
 	call div
