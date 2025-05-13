@@ -93,7 +93,7 @@ $(TARGET).bit: $(TARGET)_out.config
 
 configure_lattice: ${TARGET}.bit   # TDI:TDO:TCK:TMS
 #	sudo openFPGALoader -c ft232RL --pins=1:2:0:3 -m ${TARGET}.bit 	
-	sudo openFPGALoader -c ft232RL --pins=RXD:RTS:TXD:CTS -m $(BUILD_DIR)/${TARGET}.bit 	
+	sudo openFPGALoader -b colorlight -m $(BUILD_DIR)/${TARGET}.bit
 	
 ########################
 #  LATTICE COLORLIGHT I5

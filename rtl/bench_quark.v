@@ -74,7 +74,7 @@ always #(tck/2) CLK <= ~CLK;
    // for(idx = 0; idx < 50; idx = idx +1)  $dumpvars(0, bench.uut.dpram_p0.dpram0.ram[idx]);
     //$dumpvars(0, bench.uut.CPU.registerFile[10],bench);
 
-    #0   RXD   = 1;
+    #0   D   = 1;
     #0   RESET = 0;
     #80  RESET = 0;
     #160 RESET = 1;
@@ -83,11 +83,11 @@ always #(tck/2) CLK <= ~CLK;
     #(tck*90000)
     UART_WRITE_BYTE(8'h34); // 4
     #(tck*2500)
-    UART_WRITE_BYTE(8'h35); // 5
+    UART_WRITE_BYTE(8'h37); // 5
     #(tck*2500)
     UART_WRITE_BYTE(8'h2A);    // Operator *
     #(tck*2500)  
-    UART_WRITE_BYTE(8'h34);//4
+    UART_WRITE_BYTE(8'h30);//4
     #(tck*2500)
     UART_WRITE_BYTE(8'h32); // 2
     #(tck*100000)

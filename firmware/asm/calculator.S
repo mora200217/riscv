@@ -60,8 +60,8 @@ loopM:
 		
 	li   t0, '*'
 	bne  t0, a3, divide
-	call mult
-#	call mult_hw
+ 	call mult
+#  b	call mult_hw
 	j    print_res
 divide:
 	call div
@@ -77,7 +77,8 @@ putstring:
 .L1:    lbu a0,0(t2)
 	beqz a0,.L2
 	call putchar
-	addi t2,t2,1	
+	addi t2,t2,1
+
 	j .L1
 .L2:    lw ra,0(sp)  # restore ra
 	addi sp,sp,4 # restore sp
